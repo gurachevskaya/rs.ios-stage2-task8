@@ -18,9 +18,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
         self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        [UINavigationBar appearance].tintColor = [UIColor yellowColor];
+//        [UINavigationBar appearance].tintColor = [UIColor yellowColor];
         self.window.backgroundColor = [UIColor whiteColor];
-        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:[CatsCollectionViewController new]];
+        CatsCollectionViewController *vc = [[CatsCollectionViewController alloc] initWithNibName:@"CatsCollectionViewController" bundle:nil];
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:vc];
         self.window.rootViewController = navigationController;
         [self.window makeKeyAndVisible];;
         return YES;

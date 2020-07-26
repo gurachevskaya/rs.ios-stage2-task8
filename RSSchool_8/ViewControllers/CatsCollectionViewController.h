@@ -1,16 +1,16 @@
 //
-//  Cat.h
+//  CatsCollectionViewController.h
 //  RSSchool_8
 //
 //  Created by Karina on 7/25/20.
 //  Copyright © 2020 Karina. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Cat : NSObject
+@interface CatsCollectionViewController : UICollectionViewController
 
 @end
 

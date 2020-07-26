@@ -10,10 +10,14 @@
 		9A16460B24CC47E100E21B3C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A16460A24CC47E100E21B3C /* AppDelegate.m */; };
 		9A16461624CC47E300E21B3C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A16461524CC47E300E21B3C /* Assets.xcassets */; };
 		9A16461C24CC47E300E21B3C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A16461B24CC47E300E21B3C /* main.m */; };
-		9A16462424CC837A00E21B3C /* CatsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A16462324CC837A00E21B3C /* CatsCollectionViewController.m */; };
 		9A16462724CC83D800E21B3C /* Cat.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A16462624CC83D800E21B3C /* Cat.m */; };
 		9A16462A24CC878400E21B3C /* CatsPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A16462924CC878400E21B3C /* CatsPresenter.m */; };
 		9A16462D24CC89A300E21B3C /* ServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A16462C24CC89A300E21B3C /* ServerManager.m */; };
+		9A16463A24CCB51700E21B3C /* CatsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A16463824CCB51700E21B3C /* CatsCollectionViewController.m */; };
+		9A16463B24CCB51700E21B3C /* CatsCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A16463924CCB51700E21B3C /* CatsCollectionViewController.xib */; };
+		9A16463F24CCD41600E21B3C /* CatCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A16463D24CCD41600E21B3C /* CatCollectionViewCell.m */; };
+		9A16464024CCD41600E21B3C /* CatCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A16463E24CCD41600E21B3C /* CatCollectionViewCell.xib */; };
+		9A16464324CD7BF200E21B3C /* ImageDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A16464224CD7BF200E21B3C /* ImageDownloadOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,14 +27,20 @@
 		9A16461524CC47E300E21B3C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9A16461A24CC47E300E21B3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A16461B24CC47E300E21B3C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		9A16462224CC837A00E21B3C /* CatsCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CatsCollectionViewController.h; sourceTree = "<group>"; };
-		9A16462324CC837A00E21B3C /* CatsCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CatsCollectionViewController.m; sourceTree = "<group>"; };
 		9A16462524CC83D800E21B3C /* Cat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cat.h; sourceTree = "<group>"; };
 		9A16462624CC83D800E21B3C /* Cat.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Cat.m; sourceTree = "<group>"; };
 		9A16462824CC878400E21B3C /* CatsPresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CatsPresenter.h; sourceTree = "<group>"; };
 		9A16462924CC878400E21B3C /* CatsPresenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CatsPresenter.m; sourceTree = "<group>"; };
 		9A16462B24CC89A300E21B3C /* ServerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerManager.h; sourceTree = "<group>"; };
 		9A16462C24CC89A300E21B3C /* ServerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ServerManager.m; sourceTree = "<group>"; };
+		9A16463724CCB51700E21B3C /* CatsCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CatsCollectionViewController.h; sourceTree = "<group>"; };
+		9A16463824CCB51700E21B3C /* CatsCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CatsCollectionViewController.m; sourceTree = "<group>"; };
+		9A16463924CCB51700E21B3C /* CatsCollectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CatsCollectionViewController.xib; sourceTree = "<group>"; };
+		9A16463C24CCD41600E21B3C /* CatCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CatCollectionViewCell.h; sourceTree = "<group>"; };
+		9A16463D24CCD41600E21B3C /* CatCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CatCollectionViewCell.m; sourceTree = "<group>"; };
+		9A16463E24CCD41600E21B3C /* CatCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CatCollectionViewCell.xib; sourceTree = "<group>"; };
+		9A16464124CD7BF200E21B3C /* ImageDownloadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageDownloadOperation.h; sourceTree = "<group>"; };
+		9A16464224CD7BF200E21B3C /* ImageDownloadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageDownloadOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,21 +73,67 @@
 		9A16460824CC47E100E21B3C /* RSSchool_8 */ = {
 			isa = PBXGroup;
 			children = (
-				9A16462224CC837A00E21B3C /* CatsCollectionViewController.h */,
-				9A16462324CC837A00E21B3C /* CatsCollectionViewController.m */,
-				9A16462524CC83D800E21B3C /* Cat.h */,
-				9A16462624CC83D800E21B3C /* Cat.m */,
-				9A16462824CC878400E21B3C /* CatsPresenter.h */,
-				9A16462924CC878400E21B3C /* CatsPresenter.m */,
-				9A16462B24CC89A300E21B3C /* ServerManager.h */,
-				9A16462C24CC89A300E21B3C /* ServerManager.m */,
 				9A16460924CC47E100E21B3C /* AppDelegate.h */,
 				9A16460A24CC47E100E21B3C /* AppDelegate.m */,
 				9A16461524CC47E300E21B3C /* Assets.xcassets */,
 				9A16461A24CC47E300E21B3C /* Info.plist */,
 				9A16461B24CC47E300E21B3C /* main.m */,
+				9A16464424CD85A400E21B3C /* ViewControllers */,
+				9A16463124CCA54E00E21B3C /* Cells */,
+				9A16464524CDC99500E21B3C /* Model */,
+				9A16464624CDC9B800E21B3C /* Presenter */,
+				9A16464724CDCA0000E21B3C /* Servises */,
 			);
 			path = RSSchool_8;
+			sourceTree = "<group>";
+		};
+		9A16463124CCA54E00E21B3C /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				9A16463C24CCD41600E21B3C /* CatCollectionViewCell.h */,
+				9A16463D24CCD41600E21B3C /* CatCollectionViewCell.m */,
+				9A16463E24CCD41600E21B3C /* CatCollectionViewCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		9A16464424CD85A400E21B3C /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				9A16463724CCB51700E21B3C /* CatsCollectionViewController.h */,
+				9A16463824CCB51700E21B3C /* CatsCollectionViewController.m */,
+				9A16463924CCB51700E21B3C /* CatsCollectionViewController.xib */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		9A16464524CDC99500E21B3C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9A16462524CC83D800E21B3C /* Cat.h */,
+				9A16462624CC83D800E21B3C /* Cat.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		9A16464624CDC9B800E21B3C /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				9A16462824CC878400E21B3C /* CatsPresenter.h */,
+				9A16462924CC878400E21B3C /* CatsPresenter.m */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		9A16464724CDCA0000E21B3C /* Servises */ = {
+			isa = PBXGroup;
+			children = (
+				9A16464124CD7BF200E21B3C /* ImageDownloadOperation.h */,
+				9A16464224CD7BF200E21B3C /* ImageDownloadOperation.m */,
+				9A16462B24CC89A300E21B3C /* ServerManager.h */,
+				9A16462C24CC89A300E21B3C /* ServerManager.m */,
+			);
+			path = Servises;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,6 +193,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A16464024CCD41600E21B3C /* CatCollectionViewCell.xib in Resources */,
+				9A16463B24CCB51700E21B3C /* CatsCollectionViewController.xib in Resources */,
 				9A16461624CC47E300E21B3C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -148,12 +206,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A16463F24CCD41600E21B3C /* CatCollectionViewCell.m in Sources */,
 				9A16462724CC83D800E21B3C /* Cat.m in Sources */,
 				9A16460B24CC47E100E21B3C /* AppDelegate.m in Sources */,
-				9A16462424CC837A00E21B3C /* CatsCollectionViewController.m in Sources */,
 				9A16462D24CC89A300E21B3C /* ServerManager.m in Sources */,
 				9A16461C24CC47E300E21B3C /* main.m in Sources */,
 				9A16462A24CC878400E21B3C /* CatsPresenter.m in Sources */,
+				9A16463A24CCB51700E21B3C /* CatsCollectionViewController.m in Sources */,
+				9A16464324CD7BF200E21B3C /* ImageDownloadOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
