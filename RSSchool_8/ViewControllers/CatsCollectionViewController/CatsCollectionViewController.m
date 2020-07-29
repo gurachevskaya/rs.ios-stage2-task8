@@ -20,6 +20,9 @@
 @property (strong, nonatomic) CatsPresenter *presenter;
 @property (strong, nonatomic) NSMutableArray<Cat *> *catsArray;
 
+@property (copy, nonatomic) NSString *apiKey;
+//4322d88c-f61c-431a-9880-2888a7f9d090
+
 @end
 
 @interface RandomCatsViewController : CatsCollectionViewController
@@ -36,13 +39,20 @@ static NSInteger page = 0;
 static NSInteger count = 20;
 static NSString * const reuseIdentifier = @"CellID";
 
-- (instancetype)initWithType:(ViewControllerType)type {
+- (void)startLoading {
+    [NSException raise:NSInternalInconsistencyException
+                format:@"You have not implemented %@ in %@", NSStringFromSelector(_cmd), NSStringFromClass([self class])];
+}
+
+- (instancetype)initWithType:(ViewControllerType)type apiKey:(NSString *)apiKey {
     self = nil;
+    
     if (type == RandomCats) {
         self = [[RandomCatsViewController alloc] initWithNibName:@"CatsCollectionViewController" bundle:nil];
     } else if (type == MyCats) {
         self = [[MyCatsViewController alloc] initWithNibName:@"CatsCollectionViewController" bundle:nil];
     }
+    self.apiKey = apiKey;
     return self;
 }
 
@@ -50,11 +60,8 @@ static NSString * const reuseIdentifier = @"CellID";
     [super viewDidLoad];
      [self.collectionView registerNib:[UINib nibWithNibName:@"CatCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:reuseIdentifier];
     self.presenter = [[CatsPresenter alloc] init];
-    self.navigationItem.rightBarButtonItem =  [[UIBarButtonItem alloc]
-              initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                   target:self
-                                   action:@selector(add)];
-//    [self configureAppearance];
+   
+    [self configureAppearance];
 //    self.navigationItem.rightBarButtonItem.tintColor = [UIColor grayColor];
     [self.presenter getCatsFromPage:page count:count completion:^(NSArray *array, NSError *error) {
         self.catsArray = [array mutableCopy];
@@ -62,6 +69,10 @@ static NSString * const reuseIdentifier = @"CellID";
     }];
 
 }
+
+- (void)viewDidAppear:(BOOL)animated {
+}
+
 
 #pragma mark <UICollectionViewDataSource>
 
@@ -85,16 +96,6 @@ static NSString * const reuseIdentifier = @"CellID";
 //           });
 //       }];
     
-//    [cell configureWithItem:cat];
-//
-//    if (indexPath.item == self.catsArray.count) {
-//        page ++;
-//
-//        [self.presenter getCatsFromPage:page count:count completion:^(NSArray * array, NSError * error) {
-//            [self.catsArray addObjectsFromArray:array];
-//        }];
-//    }
-//
     return cell;
 }
 
@@ -105,6 +106,25 @@ static NSString * const reuseIdentifier = @"CellID";
   
 
     [self presentViewController:[[PreviewViewController alloc] initWithCat:cat] animated:YES completion:nil];
+}
+
+
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    if(self.catsArray.count > 1) {
+        if(indexPath.row == self.catsArray.count - 1){
+            if (count == 100) {
+                page = page + 1;
+                count = 20;
+            }
+            count = count + 20;
+            [self.presenter getCatsFromPage:page count:count completion:^(NSArray *array, NSError *error) {
+                if (array) {
+                [self.catsArray addObjectsFromArray:array];
+                [self.collectionView reloadData];
+                }
+            }];
+        }
+    }
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
@@ -121,13 +141,25 @@ static NSString * const reuseIdentifier = @"CellID";
 
 @implementation RandomCatsViewController
 
+- (void)configureAppearance {
+    self.title = @"RandomCats";
+}
 
 @end
 
 @implementation MyCatsViewController
 
 - (void)configureAppearance {
+    self.title = @"MyCats";
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor grayColor];
+    self.navigationItem.rightBarButtonItem =  [[UIBarButtonItem alloc]
+                 initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                      target:self
+                                      action:@selector(add)];
 }
 
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return 0;
+}
 @end
