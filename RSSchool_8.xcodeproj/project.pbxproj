@@ -18,6 +18,10 @@
 		9A16463F24CCD41600E21B3C /* CatCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A16463D24CCD41600E21B3C /* CatCollectionViewCell.m */; };
 		9A16464024CCD41600E21B3C /* CatCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A16463E24CCD41600E21B3C /* CatCollectionViewCell.xib */; };
 		9A16464324CD7BF200E21B3C /* ImageDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A16464224CD7BF200E21B3C /* ImageDownloadOperation.m */; };
+		9A16465C24CF4D4600E21B3C /* UIImageView+LoadWithURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A16465B24CF4D4600E21B3C /* UIImageView+LoadWithURL.m */; };
+		9A16465F24CF585D00E21B3C /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A16465E24CF585D00E21B3C /* PreviewViewController.m */; };
+		9A40EC6324D1DC3500F29922 /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A40EC6124D1DC3500F29922 /* OptionsViewController.m */; };
+		9A40EC6424D1DC3500F29922 /* OptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A40EC6224D1DC3500F29922 /* OptionsViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +45,13 @@
 		9A16463E24CCD41600E21B3C /* CatCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CatCollectionViewCell.xib; sourceTree = "<group>"; };
 		9A16464124CD7BF200E21B3C /* ImageDownloadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageDownloadOperation.h; sourceTree = "<group>"; };
 		9A16464224CD7BF200E21B3C /* ImageDownloadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageDownloadOperation.m; sourceTree = "<group>"; };
+		9A16465A24CF4D4500E21B3C /* UIImageView+LoadWithURL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+LoadWithURL.h"; sourceTree = "<group>"; };
+		9A16465B24CF4D4600E21B3C /* UIImageView+LoadWithURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+LoadWithURL.m"; sourceTree = "<group>"; };
+		9A16465D24CF585D00E21B3C /* PreviewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreviewViewController.h; sourceTree = "<group>"; };
+		9A16465E24CF585D00E21B3C /* PreviewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreviewViewController.m; sourceTree = "<group>"; };
+		9A40EC6024D1DC3500F29922 /* OptionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionsViewController.h; sourceTree = "<group>"; };
+		9A40EC6124D1DC3500F29922 /* OptionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OptionsViewController.m; sourceTree = "<group>"; };
+		9A40EC6224D1DC3500F29922 /* OptionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionsViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,9 +111,9 @@
 		9A16464424CD85A400E21B3C /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				9A16463724CCB51700E21B3C /* CatsCollectionViewController.h */,
-				9A16463824CCB51700E21B3C /* CatsCollectionViewController.m */,
-				9A16463924CCB51700E21B3C /* CatsCollectionViewController.xib */,
+				9A40EC6524D1DC3C00F29922 /* OptionsViewController */,
+				9A16466024CF586800E21B3C /* CatsCollectionViewController */,
+				9A16466124CF587B00E21B3C /* PreviewViewController */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -128,12 +139,43 @@
 		9A16464724CDCA0000E21B3C /* Servises */ = {
 			isa = PBXGroup;
 			children = (
+				9A16465A24CF4D4500E21B3C /* UIImageView+LoadWithURL.h */,
+				9A16465B24CF4D4600E21B3C /* UIImageView+LoadWithURL.m */,
 				9A16464124CD7BF200E21B3C /* ImageDownloadOperation.h */,
 				9A16464224CD7BF200E21B3C /* ImageDownloadOperation.m */,
 				9A16462B24CC89A300E21B3C /* ServerManager.h */,
 				9A16462C24CC89A300E21B3C /* ServerManager.m */,
 			);
 			path = Servises;
+			sourceTree = "<group>";
+		};
+		9A16466024CF586800E21B3C /* CatsCollectionViewController */ = {
+			isa = PBXGroup;
+			children = (
+				9A16463724CCB51700E21B3C /* CatsCollectionViewController.h */,
+				9A16463824CCB51700E21B3C /* CatsCollectionViewController.m */,
+				9A16463924CCB51700E21B3C /* CatsCollectionViewController.xib */,
+			);
+			path = CatsCollectionViewController;
+			sourceTree = "<group>";
+		};
+		9A16466124CF587B00E21B3C /* PreviewViewController */ = {
+			isa = PBXGroup;
+			children = (
+				9A16465D24CF585D00E21B3C /* PreviewViewController.h */,
+				9A16465E24CF585D00E21B3C /* PreviewViewController.m */,
+			);
+			path = PreviewViewController;
+			sourceTree = "<group>";
+		};
+		9A40EC6524D1DC3C00F29922 /* OptionsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				9A40EC6024D1DC3500F29922 /* OptionsViewController.h */,
+				9A40EC6124D1DC3500F29922 /* OptionsViewController.m */,
+				9A40EC6224D1DC3500F29922 /* OptionsViewController.xib */,
+			);
+			path = OptionsViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,6 +236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A16464024CCD41600E21B3C /* CatCollectionViewCell.xib in Resources */,
+				9A40EC6424D1DC3500F29922 /* OptionsViewController.xib in Resources */,
 				9A16463B24CCB51700E21B3C /* CatsCollectionViewController.xib in Resources */,
 				9A16461624CC47E300E21B3C /* Assets.xcassets in Resources */,
 			);
@@ -206,14 +249,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A16465C24CF4D4600E21B3C /* UIImageView+LoadWithURL.m in Sources */,
 				9A16463F24CCD41600E21B3C /* CatCollectionViewCell.m in Sources */,
 				9A16462724CC83D800E21B3C /* Cat.m in Sources */,
 				9A16460B24CC47E100E21B3C /* AppDelegate.m in Sources */,
 				9A16462D24CC89A300E21B3C /* ServerManager.m in Sources */,
 				9A16461C24CC47E300E21B3C /* main.m in Sources */,
 				9A16462A24CC878400E21B3C /* CatsPresenter.m in Sources */,
+				9A16465F24CF585D00E21B3C /* PreviewViewController.m in Sources */,
 				9A16463A24CCB51700E21B3C /* CatsCollectionViewController.m in Sources */,
 				9A16464324CD7BF200E21B3C /* ImageDownloadOperation.m in Sources */,
+				9A40EC6324D1DC3500F29922 /* OptionsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,7 +383,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 84DXJF9WZG;
 				INFOPLIST_FILE = RSSchool_8/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -355,7 +401,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 84DXJF9WZG;
 				INFOPLIST_FILE = RSSchool_8/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

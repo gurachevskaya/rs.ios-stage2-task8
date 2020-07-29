@@ -1,8 +1,8 @@
 //
-//  CatsCollectionViewController.h
+//  OptionsViewController.h
 //  RSSchool_8
 //
-//  Created by Karina on 7/25/20.
+//  Created by Karina on 7/29/20.
 //  Copyright © 2020 Karina. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CatsCollectionViewController : UICollectionViewController
+@interface OptionsViewController : UIViewController
 
 @end
 

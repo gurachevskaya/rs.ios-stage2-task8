@@ -34,7 +34,7 @@
 - (void)getCatsFromPage:(NSInteger)page count:(NSInteger)count completion:(void(^)(NSArray *, NSError *))completion {
     NSMutableArray *array = [NSMutableArray array];
         
-    [self.serverManager performGetRequestForUrl:@"https://api.thecatapi.com/v1/images/search" arguments:@{@"page" : [NSString stringWithFormat:@"%ld", page] ,@"limit" : [NSString stringWithFormat:@"%ld", count], @"order" : @"ASC"} completion:^(NSDictionary *dictionary, NSError *error) {
+    [self.serverManager performRequestWithMethod:@"GET" forUrl:@"https://api.thecatapi.com/v1/images/search" arguments:@{@"page" : [NSString stringWithFormat:@"%ld", page] ,@"limit" : [NSString stringWithFormat:@"%ld", count], @"order" : @"ASC"} completion:^(NSDictionary *dictionary, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (error) {
                 completion(nil,error);

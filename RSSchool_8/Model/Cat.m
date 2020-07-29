@@ -17,7 +17,13 @@
         
         _catId = [responseObject objectForKey:@"id"];
         
-        _imageURL = [responseObject objectForKey:@"url"];
+//        _imageURL = [responseObject objectForKey:@"url"];
+        
+        NSString* urlString = [responseObject objectForKey:@"url"];
+        
+        if (urlString) {
+            _imageURL = [NSURL URLWithString:urlString];
+        }
       
     }
     return self;

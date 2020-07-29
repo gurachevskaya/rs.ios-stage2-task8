@@ -44,7 +44,9 @@
     return _session;
 }
 
-- (void)performGetRequestForUrl:(NSString *)stringUrl arguments:(NSDictionary *)arguments completion:(void(^)(NSDictionary *, NSError *))completion {
+//- (void)getFeedWi
+
+- (void)performRequestWithMethod:(NSString *)method forUrl:(NSString *)stringUrl arguments:(NSDictionary *)arguments completion:(void(^)(NSDictionary *, NSError *))completion {
     NSURLComponents *urlComponents = [NSURLComponents componentsWithString:stringUrl];
     
     if (arguments) {
@@ -56,7 +58,9 @@
     }
     
     NSURL *url = urlComponents.URL;
-    NSURLSessionDataTask *dataTask = [self.session dataTaskWithURL:url
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+    [request setHTTPMethod:method];
+    NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request
                                                  completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error) {
             completion(nil, error);

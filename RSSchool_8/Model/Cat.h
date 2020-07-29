@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface Cat : NSObject
 
 @property (strong, nonatomic) NSString* catId;
-@property (strong, nonatomic) NSString* imageURL;
+@property (strong, nonatomic) NSURL* imageURL;
 
 @property (strong, nonatomic) UIImage *image;
 

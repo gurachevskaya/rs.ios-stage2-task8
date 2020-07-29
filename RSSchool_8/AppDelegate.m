@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "CatsCollectionViewController.h"
+#import "OptionsViewController.h"
 
 @interface AppDelegate ()
 
@@ -20,7 +21,7 @@
         self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 //        [UINavigationBar appearance].tintColor = [UIColor yellowColor];
         self.window.backgroundColor = [UIColor whiteColor];
-        CatsCollectionViewController *vc = [[CatsCollectionViewController alloc] initWithNibName:@"CatsCollectionViewController" bundle:nil];
+        OptionsViewController *vc = [[OptionsViewController alloc] initWithNibName:@"OptionsViewController" bundle:nil];
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:vc];
         self.window.rootViewController = navigationController;
         [self.window makeKeyAndVisible];;

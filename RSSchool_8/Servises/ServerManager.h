@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 //                    onSuccess:(void(^)(NSArray* cats)) success
 //                    onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
 
-- (void)performGetRequestForUrl:(NSString *)stringUrl arguments:(NSDictionary *)arguments completion:(void(^)(NSDictionary *, NSError *))completion;
+- (void)performRequestWithMethod:(NSString *)method forUrl:(NSString *)stringUrl arguments:(NSDictionary *)arguments completion:(void(^)(NSDictionary *, NSError *))completion;
 
 @end
 
