@@ -23,7 +23,7 @@
 
 
 - (IBAction)randomCatsButtonTapped:(id)sender {
-    CatsCollectionViewController *catsVC = [[CatsCollectionViewController alloc] initWithType:RandomCats apiKey:@""];
+    CatsCollectionViewController *catsVC = [[CatsCollectionViewController alloc] initWithType:RandomCats];
     
     [self.navigationController pushViewController:catsVC animated:YES];
 }
@@ -48,8 +48,9 @@
             NSString *enteredText = alertController.textFields.firstObject.text;
             if (enteredText.length > 0) {
 //                [[NSBundle mainBundle] setValue:enteredText forKey:@"API key"];
+                [[NSUserDefaults standardUserDefaults] setObject:enteredText forKey:@"API key"];
                 
-                CatsCollectionViewController *catsVC = [[CatsCollectionViewController alloc] initWithType:MyCats apiKey:enteredText];
+                CatsCollectionViewController *catsVC = [[CatsCollectionViewController alloc] initWithType:MyCats];
                 [self.navigationController pushViewController:catsVC animated:YES];
             }
         }];

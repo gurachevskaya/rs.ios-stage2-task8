@@ -19,8 +19,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
         self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-//        [UINavigationBar appearance].tintColor = [UIColor yellowColor];
-        self.window.backgroundColor = [UIColor whiteColor];
+        [UINavigationBar appearance].tintColor = [UIColor blackColor];
         OptionsViewController *vc = [[OptionsViewController alloc] initWithNibName:@"OptionsViewController" bundle:nil];
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:vc];
         self.window.rootViewController = navigationController;

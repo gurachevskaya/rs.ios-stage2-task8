@@ -10,15 +10,23 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CatsCollectionViewController : UICollectionViewController
 
 typedef NS_ENUM(NSInteger, ViewControllerType) {
   RandomCats,
   MyCats
 };
 
-- (instancetype)initWithType:(ViewControllerType)type;
 
+@protocol CatsLoadingProtocol
+
+- (void)startLoading;
+- (void)configureAppearance;
+
+@end
+
+@interface CatsCollectionViewController : UICollectionViewController <CatsLoadingProtocol>
+
+- (instancetype)initWithType:(ViewControllerType)type;
 
 @end
 

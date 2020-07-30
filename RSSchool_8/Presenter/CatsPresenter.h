@@ -15,8 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CatsPresenter : NSObject
 
 - (void)getCatsFromPage:(NSInteger)page count:(NSInteger)count completion:(void(^)(NSArray *, NSError *))completion;
-- (void)loadImageForURL:(NSString *)url completion:(void (^)(UIImage *))completion;
-- (void)cancelDownloadingForUrl:(NSString *)url;
+
+- (void)getUploadedCatsFromPage:(NSInteger)page count:(NSInteger)count completion:(void(^)(NSArray *, NSError *))completion;
+
+- (void)uploadImage:(UIImage *)image withName:(NSString *)name completion:(void(^)(NSArray *, NSError *))completion;
 
 @end
 

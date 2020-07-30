@@ -17,16 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (ServerManager*) sharedManager;
 
-//- (void) getCat:(NSString*) catID
-//       onSuccess:(void(^)(Cat* cat)) success
-//       onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
-
-//- (void) getCatsWithOffset:(NSInteger) offset
-//                        count:(NSInteger) count
-//                    onSuccess:(void(^)(NSArray* cats)) success
-//                    onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure;
-
 - (void)performRequestWithMethod:(NSString *)method forUrl:(NSString *)stringUrl arguments:(NSDictionary *)arguments completion:(void(^)(NSDictionary *, NSError *))completion;
+
+- (void)performNetworkEventRequestCallWithFileUpload :(UIImage *)image name:(NSString *)name forUrl:(NSString *)stringUrl completion:(void (^)(NSDictionary*, NSError *))completion;
 
 @end
 

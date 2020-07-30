@@ -12,9 +12,8 @@
 
 
 @interface CatsPresenter ()
+
 @property (strong, nonatomic) ServerManager *serverManager;
-@property (strong, nonatomic) NSOperationQueue *queue;
-@property (strong, nonatomic) NSMutableDictionary<NSString *, NSArray<NSOperation *> *> *operations;
 
 @end
 
@@ -25,8 +24,6 @@
     self = [super init];
     if (self) {
         _serverManager = [ServerManager sharedManager];
-        _queue = [NSOperationQueue new];
-        _operations = [NSMutableDictionary new];
     }
     return self;
 }
@@ -50,22 +47,56 @@
     }];
 }
 
-- (void)loadImageForURL:(NSString *)url completion:(void (^)(UIImage *))completion {
-    [self cancelDownloadingForUrl:url];
-    ImageDownloadOperation *operation = [[ImageDownloadOperation alloc] initWithUrl:url];
-    self.operations[url] = @[operation];
-    operation.completion = ^(UIImage *image) {
-        completion(image);
-    };
-    [self.queue addOperation:operation];
+- (void)getUploadedCatsFromPage:(NSInteger)page count:(NSInteger)count completion:(void(^)(NSArray *, NSError *))completion {
+    NSMutableArray *array = [NSMutableArray array];
+    NSString *pageForRequest = [NSString stringWithFormat:@"%ld", page];
+    NSString *limitForRequest = [NSString stringWithFormat:@"%ld", count];
+
+    [self.serverManager performRequestWithMethod:@"GET" forUrl:@"https://api.thecatapi.com/v1/images/upload" arguments:@{@"page" : pageForRequest,@"limit" : limitForRequest, @"order" : @"ASC"} completion:^(NSDictionary *dictionary, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error) {
+                completion(nil,error);
+                NSLog(@"%@", [NSString stringWithFormat:@"Error: %@", error]);
+                return;
+            }
+            
+            NSNumber *message = dictionary[@"message"];
+            if (message) {
+                NSLog(@"%@", message);
+                completion(nil, error);
+            } else {
+            for (NSDictionary* dict in dictionary) {
+                Cat* cat = [[Cat alloc] initWithServerResponse:dict];
+                [array addObject:cat];
+            }
+            completion(array, nil);
+            }
+        });
+    }];
 }
 
-- (void)cancelDownloadingForUrl:(NSString *)url {
-    NSArray<NSOperation *> *operations = self.operations[url];
-    if (!operations) { return; }
-    for (NSOperation *operation in operations) {
-        [operation cancel];
-    }
+- (void)uploadImage:(UIImage *)image withName:(NSString *)name completion:(void(^)(NSArray *, NSError *))completion {
+    
+    [self.serverManager performNetworkEventRequestCallWithFileUpload:image name:name forUrl:@"https://api.thecatapi.com/v1/images/upload" completion:^(NSDictionary *dictionary, NSError * error) {
+        NSMutableArray *array = [NSMutableArray array];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error) {
+                completion(nil,error);
+                NSLog(@"%@", [NSString stringWithFormat:@"Error: %@", error]);
+                return;
+            }
+            NSNumber *message = dictionary[@"message"];
+            if (message) {
+                NSLog(@"%@", message);
+                completion(nil, error);
+            } else {
+                Cat* cat = [[Cat alloc] initWithServerResponse:dictionary];
+                [array addObject:cat];
+            }
+            completion(array, nil);
+        });
+    }];
 }
 
 @end
