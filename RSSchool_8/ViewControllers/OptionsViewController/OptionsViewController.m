@@ -32,13 +32,13 @@
                                                                                  message:nil
                                                                           preferredStyle:UIAlertControllerStyleAlert];
         
-        [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
             textField.placeholder = @"API key...";
         }];
         
         UIAlertAction *doneAction = [UIAlertAction actionWithTitle:@"Done"
                                                              style:UIAlertActionStyleDefault
-                                                           handler:^(UIAlertAction * _Nonnull action) {
+                                                           handler:^(UIAlertAction *action) {
             NSString *enteredText = alertController.textFields.firstObject.text;
             if (enteredText.length > 0) {
                 [[NSUserDefaults standardUserDefaults] setObject:enteredText forKey:@"API key"];

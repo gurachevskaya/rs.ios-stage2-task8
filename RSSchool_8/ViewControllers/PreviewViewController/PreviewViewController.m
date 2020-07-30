@@ -33,43 +33,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
-    
-    self.fullImageView = [[UIImageView alloc] init];
-    [self.view addSubview:self.fullImageView ];
-    self.fullImageView.contentMode = UIViewContentModeScaleAspectFit;
-        
-    [self.fullImageView loadImageWithUrl:self.cat.imageURL andPlaceholder:[UIImage imageNamed:@"kitty"]];
-
-    self.fullImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    if (@available(iOS 13.0, *)) {
-        self.closeButton = [UIButton buttonWithType:UIButtonTypeClose];
-    } else {
-        self.closeButton = [[UIButton alloc] init];
-        self.closeButton.backgroundColor = [UIColor whiteColor];
-        [self.closeButton setTitle:@"X" forState:UIControlStateNormal];
-        [self.closeButton setBackgroundColor:[UIColor grayColor]];
-        self.closeButton.layer.cornerRadius = 20;
-    }
-    [self.closeButton addTarget:self action:@selector(closeButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.closeButton];
-    self.closeButton.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    self.saveButton = [[UIButton alloc] init];
-    [self.saveButton setImage:[UIImage imageNamed:@"save"] forState:UIControlStateNormal];
-    [self.saveButton addTarget:self action:@selector(saveButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.saveButton];
-    self.saveButton.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    self.savedLabel = [[UILabel alloc] init];
-    self.savedLabel.text = @"Saved!";
-    self.savedLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:30.0];
-    self.savedLabel.textColor = [UIColor whiteColor];
-    self.savedLabel.hidden = YES;
-    [self.savedLabel sizeToFit];
-    [self.view addSubview:self.savedLabel];
-    self.savedLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self configureFullImageView];
+    [self configureCloseButton];
+    [self configureSaveButton];
+    [self configureSavedLabel];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -97,6 +64,58 @@
         [self.savedLabel.centerXAnchor constraintEqualToAnchor:self.fullImageView.centerXAnchor],
         [self.savedLabel.centerYAnchor constraintEqualToAnchor:self.fullImageView.centerYAnchor],
     ]];
+}
+
+#pragma mark - UI Setup
+
+- (void)configureFullImageView {
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    self.fullImageView = [[UIImageView alloc] init];
+    [self.view addSubview:self.fullImageView];
+    self.fullImageView.contentMode = UIViewContentModeScaleAspectFit;
+        
+    [self.fullImageView loadImageWithUrl:self.cat.imageURL andPlaceholder:[UIImage imageNamed:@"kitty"] completion:^(UIImage * image) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.fullImageView setImage:image];
+        });
+    }];
+    self.fullImageView.translatesAutoresizingMaskIntoConstraints = NO;
+}
+
+- (void)configureSaveButton {
+    self.saveButton = [[UIButton alloc] init];
+    [self.saveButton setImage:[UIImage imageNamed:@"save"] forState:UIControlStateNormal];
+    [self.saveButton addTarget:self action:@selector(saveButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.saveButton];
+    self.saveButton.translatesAutoresizingMaskIntoConstraints = NO;
+}
+
+- (void)configureCloseButton {
+    if (@available(iOS 13.0, *)) {
+        self.closeButton = [UIButton buttonWithType:UIButtonTypeClose];
+    } else {
+        self.closeButton = [[UIButton alloc] init];
+        self.closeButton.backgroundColor = [UIColor whiteColor];
+        [self.closeButton setTitle:@"X" forState:UIControlStateNormal];
+        [self.closeButton setBackgroundColor:[UIColor grayColor]];
+        self.closeButton.layer.cornerRadius = 20;
+    }
+    [self.closeButton addTarget:self action:@selector(closeButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.closeButton];
+    self.closeButton.translatesAutoresizingMaskIntoConstraints = NO;
+}
+
+- (void)configureSavedLabel {
+    self.savedLabel = [[UILabel alloc] init];
+    self.savedLabel.text = @"Saved!";
+    self.savedLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:30.0];
+    self.savedLabel.textColor = [UIColor whiteColor];
+    self.savedLabel.hidden = YES;
+    [self.savedLabel sizeToFit];
+    [self.view addSubview:self.savedLabel];
+    self.savedLabel.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 #pragma mark - Actions

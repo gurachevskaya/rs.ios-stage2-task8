@@ -11,19 +11,17 @@
 
 @implementation UIImageView (LoadWithURL)
 
-- (void)loadImageWithUrl:(NSURL *)url andPlaceholder:(UIImage *)placeholder {
+- (void)loadImageWithUrl:(NSURL *)url andPlaceholder:(UIImage *)placeholder completion:(void(^)(UIImage*))completion {
     __weak typeof(self) weakSelf = self;
-    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSURLCache* cache = [NSURLCache sharedURLCache];
         NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
         NSCachedURLResponse *cachedResponse = [cache cachedResponseForRequest:request];
         if (cachedResponse) {
             UIImage *image = [UIImage imageWithData:cachedResponse.data];
-            [weakSelf setImageInMain:image];
+            completion(image);
         } else {
             [weakSelf setImageInMain:placeholder];
-            
             NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                 if (error) {
                     return;
@@ -31,7 +29,7 @@
                 NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:data];
                 [cache storeCachedResponse:cachedResponse forRequest:request];
                 UIImage *image = [UIImage imageWithData:data];
-                [weakSelf setImageInMain:image];
+                completion(image);
             }];
             [dataTask resume];
         }

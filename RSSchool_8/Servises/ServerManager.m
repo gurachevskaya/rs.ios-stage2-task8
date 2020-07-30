@@ -85,7 +85,6 @@
     [request setURL:[NSURL URLWithString:stringUrl]];
     [request setHTTPMethod:@"POST"];
     
-    
     NSString *boundary = @"---------------------------14737809831466499882746641449";
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
     [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
@@ -132,7 +131,6 @@
 - (NSDictionary *)parseJSONDAta:(NSData *)data error:(NSError **)error {
     return [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:error];
 }
-
 
 
 @end

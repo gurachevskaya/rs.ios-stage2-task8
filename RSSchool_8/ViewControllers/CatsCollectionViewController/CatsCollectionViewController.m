@@ -16,7 +16,7 @@
 
 @interface CatsCollectionViewController () <UICollectionViewDelegateFlowLayout>
 
-@property (strong, nonatomic) UIActivityIndicatorView *indicatorview;
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic) CatsPresenter *presenter;
 @property (strong, nonatomic) NSMutableArray<Cat *> *catsArray;
 
@@ -65,11 +65,12 @@ static NSString * const reuseIdentifier = @"CellID";
     [super viewDidLoad];
      [self.collectionView registerNib:[UINib nibWithNibName:@"CatCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:reuseIdentifier];
     self.presenter = [[CatsPresenter alloc] init];
+        
     [self configureAppearance];
     [self startLoading];
 }
 
-#pragma mark <UICollectionViewDataSource>
+#pragma mark UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.catsArray.count;
@@ -78,7 +79,16 @@ static NSString * const reuseIdentifier = @"CellID";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     CatCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     Cat *cat = self.catsArray[indexPath.item];
-    [cell.imageView loadImageWithUrl:cat.imageURL andPlaceholder:[UIImage imageNamed:@"kitty"]];
+    
+    [cell.activityIndicator startAnimating];
+
+    [cell.imageView loadImageWithUrl:cat.imageURL andPlaceholder:[UIImage imageNamed:@"kitty"] completion:^(UIImage * image) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [cell.imageView setImage:image];
+            [cell.activityIndicator stopAnimating];
+        });
+    }];
+
     return cell;
 }
 
@@ -87,6 +97,9 @@ static NSString * const reuseIdentifier = @"CellID";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     Cat *cat = self.catsArray[indexPath.item];
     [self presentViewController:[[PreviewViewController alloc] initWithCat:cat] animated:YES completion:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.activityIndicator stopAnimating];
+    });
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
@@ -153,6 +166,7 @@ static NSString * const reuseIdentifier = @"CellID";
 }
 
 - (void)startLoading {
+
     [self.presenter getUploadedCatsFromPage:page count:count completion:^(NSArray *array, NSError *error) {
         if (error){
             NSLog(@"Error");
@@ -206,10 +220,12 @@ static NSString * const reuseIdentifier = @"CellID";
     [self presentViewController:imagePickController animated:YES completion:nil];
 }
 
+#pragma mark - Private
+
 - (void)showAlert {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Failed. Image was too big, did not contain a Cat, was inappropriate, or the wrong file type."
-                                                                             message:nil
-                                                                      preferredStyle:UIAlertControllerStyleAlert];
+                                                            message:nil
+                                                            preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
     [alertController addAction:okAction];
     [self presentViewController:alertController animated:YES completion:nil];
