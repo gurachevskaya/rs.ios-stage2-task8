@@ -223,7 +223,7 @@ static NSString * const reuseIdentifier = @"CellID";
 #pragma mark - Private
 
 - (void)showAlert {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Failed. Image was too big, did not contain a Cat, was inappropriate, or the wrong file type."
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Failed. Image was too big, did not contain a Cat, was inappropriate, the wrong file type, or you entered wrong API key"
                                                             message:nil
                                                             preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
