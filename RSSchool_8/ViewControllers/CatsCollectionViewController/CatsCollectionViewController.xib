@@ -30,12 +30,7 @@
             <connections>
                 <outlet property="dataSource" destination="-1" id="Tng-2m-Rnh"/>
             </connections>
-            <point key="canvasLocation" x="139" y="117"/>
+            <point key="canvasLocation" x="203" y="104"/>
         </collectionView>
-        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" id="4Lx-Zc-dv7">
-            <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <point key="canvasLocation" x="189.85507246376812" y="469.41964285714283"/>
-        </activityIndicatorView>
     </objects>
 </document>

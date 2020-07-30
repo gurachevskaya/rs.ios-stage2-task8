@@ -20,6 +20,13 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ILx-Oh-0L8">
                         <rect key="frame" x="0.0" y="0.0" width="256" height="276"/>
                     </imageView>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Successfully loaded!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nJP-G0-LLH">
+                        <rect key="frame" x="49" y="127.5" width="158" height="21"/>
+                        <color key="backgroundColor" red="1" green="1" blue="0.94533925510000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
             <constraints>
@@ -27,11 +34,14 @@
                 <constraint firstAttribute="bottom" secondItem="ILx-Oh-0L8" secondAttribute="bottom" id="4Fy-Ki-tct"/>
                 <constraint firstItem="ILx-Oh-0L8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="PIa-iC-yCF"/>
                 <constraint firstItem="ILx-Oh-0L8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="WbK-MK-CqR"/>
+                <constraint firstItem="nJP-G0-LLH" firstAttribute="centerY" secondItem="ILx-Oh-0L8" secondAttribute="centerY" id="aat-qZ-kUq"/>
+                <constraint firstItem="nJP-G0-LLH" firstAttribute="centerX" secondItem="ILx-Oh-0L8" secondAttribute="centerX" id="oqN-4D-OQx"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
             <size key="customSize" width="256" height="276"/>
             <connections>
                 <outlet property="imageView" destination="ILx-Oh-0L8" id="RbE-AW-WBL"/>
+                <outlet property="successLabel" destination="nJP-G0-LLH" id="LEC-5H-6RI"/>
             </connections>
             <point key="canvasLocation" x="-19" y="-17"/>
         </collectionViewCell>

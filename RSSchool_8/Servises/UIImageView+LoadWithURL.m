@@ -13,6 +13,7 @@
 
 - (void)loadImageWithUrl:(NSURL *)url andPlaceholder:(UIImage *)placeholder {
     __weak typeof(self) weakSelf = self;
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSURLCache* cache = [NSURLCache sharedURLCache];
         NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];

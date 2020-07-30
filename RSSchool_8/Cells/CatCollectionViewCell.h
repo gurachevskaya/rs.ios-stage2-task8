@@ -13,8 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CatCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
-
 - (void)configureWithItem:(Cat *)cat;
+@property (weak, nonatomic) IBOutlet UILabel *successLabel;
 
 @end
 

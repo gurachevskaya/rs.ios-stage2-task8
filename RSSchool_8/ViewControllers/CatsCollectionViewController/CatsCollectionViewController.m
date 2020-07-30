@@ -44,6 +44,11 @@ static NSString * const reuseIdentifier = @"CellID";
                 format:@"You have not implemented %@ in %@", NSStringFromSelector(_cmd), NSStringFromClass([self class])];
 }
 
+- (void)configureAppearance {
+    [NSException raise:NSInternalInconsistencyException
+    format:@"You have not implemented %@ in %@", NSStringFromSelector(_cmd), NSStringFromClass([self class])];
+}
+
 - (instancetype)initWithType:(ViewControllerType)type {
     self = nil;
     
@@ -60,11 +65,8 @@ static NSString * const reuseIdentifier = @"CellID";
     [super viewDidLoad];
      [self.collectionView registerNib:[UINib nibWithNibName:@"CatCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:reuseIdentifier];
     self.presenter = [[CatsPresenter alloc] init];
-   
     [self configureAppearance];
-//    self.navigationItem.rightBarButtonItem.tintColor = [UIColor grayColor];
     [self startLoading];
-
 }
 
 #pragma mark <UICollectionViewDataSource>
@@ -75,20 +77,8 @@ static NSString * const reuseIdentifier = @"CellID";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     CatCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-
     Cat *cat = self.catsArray[indexPath.item];
-    
     [cell.imageView loadImageWithUrl:cat.imageURL andPlaceholder:[UIImage imageNamed:@"kitty"]];
-    
-//    __weak typeof(self) weakSelf = self;
-//    [self.presenter loadImageForURL:cat.imageURL completion:^(UIImage *image) {
-//           dispatch_async(dispatch_get_main_queue(), ^{
-//               weakSelf.catsArray[indexPath.item].image = image;
-//               [weakSelf.collectionView reloadData];
-////              [self.activityIndicator stopAnimating];
-//           });
-//       }];
-    
     return cell;
 }
 
@@ -113,6 +103,8 @@ static NSString * const reuseIdentifier = @"CellID";
 
 @implementation RandomCatsViewController
 
+#pragma mark - CatsLoadingProtocol
+
 - (void)configureAppearance {
     self.title = @"RandomCats";
 }
@@ -124,6 +116,8 @@ static NSString * const reuseIdentifier = @"CellID";
     }];
 }
 
+#pragma mark - UICollectionViewDelegate
+
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
     if(self.catsArray.count > 1) {
         if(indexPath.row == self.catsArray.count - 1){
@@ -132,11 +126,10 @@ static NSString * const reuseIdentifier = @"CellID";
                 count = 20;
             }
             count = count + 20;
-            
             [self.presenter getCatsFromPage:page count:count completion:^(NSArray *array, NSError *error) {
                 if (array) {
-                [self.catsArray addObjectsFromArray:array];
-                [self.collectionView reloadData];
+                    [self.catsArray addObjectsFromArray:array];
+                    [self.collectionView reloadData];
                 }
             }];
         }
@@ -145,12 +138,15 @@ static NSString * const reuseIdentifier = @"CellID";
 
 @end
 
+
 @implementation MyCatsViewController
 
+#pragma mark - CatsLoadingProtocol
+
 - (void)configureAppearance {
-    self.title = @"MyCats";
+    self.title = @"Cats loading";
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor grayColor];
-    self.navigationItem.rightBarButtonItem =  [[UIBarButtonItem alloc]
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
                  initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                       target:self
                                       action:@selector(addCat)];
@@ -160,58 +156,63 @@ static NSString * const reuseIdentifier = @"CellID";
     [self.presenter getUploadedCatsFromPage:page count:count completion:^(NSArray *array, NSError *error) {
         if (error){
             NSLog(@"Error");
+        } else {
+        self.catsArray = [array mutableCopy];
+        [self.collectionView reloadData];
         }
-           self.catsArray = [array mutableCopy];
-           [self.collectionView reloadData];
-       }];
+    }];
 }
 
-- (void)addCat {
-    
-    UIImagePickerController *imagePickController = [[UIImagePickerController alloc]init];
-    //    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-    //
-    //        UIAlertController *myAlertController = [[UIAlertController alloc] initWithTitle:@"Error"
-    //                                                              message:@"Device has no camera."
-    //                                                             delegate:nil
-    //                                                    cancelButtonTitle:@"OK"
-    //                                                    otherButtonTitles: nil];
-    //
-    //        [myAlertView show];
-    //
-    //    }
-    //    else{
-    //         //other action
-    //    }
-    imagePickController.modalPresentationStyle = UIModalPresentationCurrentContext;
-    imagePickController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    imagePickController.delegate = self;
-    imagePickController.allowsEditing = NO;
-    
-    [self presentViewController:imagePickController animated:YES completion:nil];
+#pragma mark - UICollectionViewDataSource
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CatCollectionViewCell *cell = [super collectionView:collectionView cellForItemAtIndexPath:indexPath];
+    [cell.successLabel setHidden:NO];
+    return cell;
 }
+
+#pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-
     NSURL *url = info[UIImagePickerControllerImageURL];
     NSString *fileName = url.lastPathComponent;
     
     [self.presenter uploadImage:image withName:fileName completion:^(NSArray * array, NSError * error) {
         if (error){
-             NSLog(@"Error");
+            [self showAlert];
          }
         if (self.catsArray){
-        [self.catsArray addObjectsFromArray:array];
+//        [self.catsArray addObjectsFromArray:array];
+        self.catsArray = [array mutableCopy];
         } else {
         self.catsArray = [NSMutableArray array];
         [self.catsArray addObjectsFromArray:array];
         }
             [self.collectionView reloadData];
-
         }];
-
+    
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Actions
+
+- (void)addCat {
+    UIImagePickerController *imagePickController = [[UIImagePickerController alloc]init];
+    imagePickController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    imagePickController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    imagePickController.delegate = self;
+    imagePickController.allowsEditing = NO;
+    [self presentViewController:imagePickController animated:YES completion:nil];
+}
+
+- (void)showAlert {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Failed. Image was too big, did not contain a Cat, was inappropriate, or the wrong file type."
+                                                                             message:nil
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
+    [alertController addAction:okAction];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 @end

@@ -66,8 +66,6 @@
     self.savedLabel.text = @"Saved!";
     self.savedLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:30.0];
     self.savedLabel.textColor = [UIColor whiteColor];
-//    self.savedLabel.backgroundColor = [UIColor grayColor];
-//    self.savedLabel.alpha = 0.8;
     self.savedLabel.hidden = YES;
     [self.savedLabel sizeToFit];
     [self.view addSubview:self.savedLabel];

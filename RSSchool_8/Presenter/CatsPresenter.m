@@ -89,7 +89,12 @@
             NSNumber *message = dictionary[@"message"];
             if (message) {
                 NSLog(@"%@", message);
+                
+                NSMutableDictionary* details = [NSMutableDictionary dictionary];
+                [details setValue:message forKey:NSLocalizedDescriptionKey];
+                NSError *error = [NSError errorWithDomain:@"animal" code:200 userInfo:details];
                 completion(nil, error);
+                
             } else {
                 Cat* cat = [[Cat alloc] initWithServerResponse:dictionary];
                 [array addObject:cat];
