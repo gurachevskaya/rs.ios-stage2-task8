@@ -27,7 +27,7 @@
 
 - (IBAction)myCatsButtonTapped:(id)sender {
     
-    if (![[NSBundle mainBundle] objectForInfoDictionaryKey:@"API key"]) {
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"API key"]) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Enter API key"
                                                                                  message:nil
                                                                           preferredStyle:UIAlertControllerStyleAlert];
@@ -43,8 +43,6 @@
             if (enteredText.length > 0) {
                 [[NSUserDefaults standardUserDefaults] setObject:enteredText forKey:@"API key"];
                 
-                CatsCollectionViewController *catsVC = [[CatsCollectionViewController alloc] initWithType:MyCats];
-                [self.navigationController pushViewController:catsVC animated:YES];
             }
         }];
         
@@ -55,5 +53,8 @@
         
         [self presentViewController:alertController animated:YES completion:nil];
     }
+ 
+    CatsCollectionViewController *catsVC = [[CatsCollectionViewController alloc] initWithType:MyCats];
+    [self.navigationController pushViewController:catsVC animated:YES];
 }
 @end

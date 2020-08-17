@@ -110,6 +110,16 @@ static NSString * const reuseIdentifier = @"CellID";
     return  CGSizeMake(self.collectionView.frame.size.width , self.collectionView.frame.size.width);
 }
 
+#pragma mark - Private
+
+- (void)showAlertWithMessage:(NSString *)message {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message
+                                                            message:nil
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
+    [alertController addAction:okAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
 
 @end
 
@@ -124,6 +134,10 @@ static NSString * const reuseIdentifier = @"CellID";
 
 - (void)startLoading {
     [self.presenter getCatsFromPage:page count:count completion:^(NSArray *array, NSError *error) {
+        if (error) {
+            NSString *message = error.localizedDescription;
+            [self showAlertWithMessage:message];
+        }
         self.catsArray = [array mutableCopy];
         [self.collectionView reloadData];
     }];
@@ -159,14 +173,20 @@ static NSString * const reuseIdentifier = @"CellID";
 - (void)configureAppearance {
     self.title = @"Cats loading";
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor grayColor];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
+    
+     UIBarButtonItem *plusItem = [[UIBarButtonItem alloc]
                  initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                       target:self
                                       action:@selector(addCat)];
+    UIBarButtonItem *preferencesItem = [[UIBarButtonItem alloc]
+    initWithImage:[UIImage imageNamed:@"settings"] style:UIBarButtonItemStylePlain
+                         target:self
+                         action:@selector(showApiKeyAlert)];
+    
+    self.navigationItem.rightBarButtonItems = @[plusItem, preferencesItem];
 }
 
 - (void)startLoading {
-
     [self.presenter getUploadedCatsFromPage:page count:count completion:^(NSArray *array, NSError *error) {
         if (error){
             NSLog(@"Error");
@@ -194,7 +214,7 @@ static NSString * const reuseIdentifier = @"CellID";
     
     [self.presenter uploadImage:image withName:fileName completion:^(NSArray * array, NSError * error) {
         if (error){
-            [self showAlert];
+            [self showAlertWithMessage:error.localizedDescription];
          }
         if (self.catsArray){
 //        [self.catsArray addObjectsFromArray:array];
@@ -220,15 +240,27 @@ static NSString * const reuseIdentifier = @"CellID";
     [self presentViewController:imagePickController animated:YES completion:nil];
 }
 
-#pragma mark - Private
 
-- (void)showAlert {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Failed. Image was too big, did not contain a Cat, was inappropriate, the wrong file type, or you entered wrong API key"
-                                                            message:nil
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
-    [alertController addAction:okAction];
-    [self presentViewController:alertController animated:YES completion:nil];
+- (void)showApiKeyAlert {
+    NSString *string = [[NSUserDefaults standardUserDefaults] objectForKey:@"API key"];
+
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Api-key editing" message:[NSString stringWithFormat:@"Current API key: %@", string] preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"Enter new Api-key";
+    }];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+
+    [alert addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSString *key = alert.textFields[0].text;
+        if (key.length != 0) {
+        [[NSUserDefaults standardUserDefaults] setObject:key forKey:@"API key"];
+        }
+    }]];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 @end
+

@@ -35,7 +35,8 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if (error) {
                 completion(nil,error);
-                NSLog(@"%@", [NSString stringWithFormat:@"Error: %@", error]);
+//                NSLog(@"%@", [NSString stringWithFormat:@"Error: %@", error]);
+                
                 return;
             }
             for (NSDictionary* dict in dictionary) {
@@ -48,7 +49,7 @@
 }
 
 - (void)getUploadedCatsFromPage:(NSInteger)page count:(NSInteger)count completion:(void(^)(NSArray *, NSError *))completion {
-    NSMutableArray *array = [NSMutableArray array];
+      NSMutableArray *array = [NSMutableArray array];
     NSString *pageForRequest = [NSString stringWithFormat:@"%ld", page];
     NSString *limitForRequest = [NSString stringWithFormat:@"%ld", count];
 
