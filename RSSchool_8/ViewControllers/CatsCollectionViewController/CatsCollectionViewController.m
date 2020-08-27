@@ -18,8 +18,6 @@
 
 @property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic) CatsPresenter *presenter;
-@property (strong, nonatomic) NSMutableArray<Cat *> *catsArray;
-
 @property (copy, nonatomic) NSString *apiKey;
 //4322d88c-f61c-431a-9880-2888a7f9d090
 
@@ -35,8 +33,6 @@
 
 @implementation CatsCollectionViewController
 
-static NSInteger page = 0;
-static NSInteger count = 20;
 static NSString * const reuseIdentifier = @"CellID";
 
 - (void)startLoading {
@@ -65,21 +61,27 @@ static NSString * const reuseIdentifier = @"CellID";
     [super viewDidLoad];
      [self.collectionView registerNib:[UINib nibWithNibName:@"CatCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:reuseIdentifier];
     self.presenter = [[CatsPresenter alloc] init];
-        
     [self configureAppearance];
+//    [self startLoading];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self startLoading];
 }
+
 
 #pragma mark UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.catsArray.count;
+    return self.presenter.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     CatCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-    Cat *cat = self.catsArray[indexPath.item];
     
+    Cat *cat = self.presenter.catsArray[indexPath.item];
+
     [cell.activityIndicator startAnimating];
 
     [cell.imageView loadImageWithUrl:cat.imageURL andPlaceholder:[UIImage imageNamed:@"kitty"] completion:^(UIImage * image) {
@@ -95,7 +97,7 @@ static NSString * const reuseIdentifier = @"CellID";
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    Cat *cat = self.catsArray[indexPath.item];
+    Cat *cat = self.presenter.catsArray[indexPath.item];
     [self presentViewController:[[PreviewViewController alloc] initWithCat:cat] animated:YES completion:nil];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.activityIndicator stopAnimating];
@@ -129,35 +131,31 @@ static NSString * const reuseIdentifier = @"CellID";
 #pragma mark - CatsLoadingProtocol
 
 - (void)configureAppearance {
-    self.title = @"RandomCats";
+    self.title = @"Random cats";
 }
 
 - (void)startLoading {
-    [self.presenter getCatsFromPage:page count:count completion:^(NSArray *array, NSError *error) {
+    [self.presenter getRandomCatsWithCompletion:^(NSArray *array, NSError * error){
         if (error) {
-            NSString *message = error.localizedDescription;
-            [self showAlertWithMessage:message];
+            [self showAlertWithMessage:error.localizedDescription];
+            return;
         }
-        self.catsArray = [array mutableCopy];
         [self.collectionView reloadData];
     }];
+    
 }
 
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-    if(self.catsArray.count > 1) {
-        if(indexPath.row == self.catsArray.count - 1){
-            if (count == 100) {
-                page = page + 1;
-                count = 20;
-            }
-            count = count + 20;
-            [self.presenter getCatsFromPage:page count:count completion:^(NSArray *array, NSError *error) {
-                if (array) {
-                    [self.catsArray addObjectsFromArray:array];
-                    [self.collectionView reloadData];
+    if(self.presenter.count > 1) {
+        if(indexPath.row == self.presenter.count - 1) {
+            [self.presenter getRandomCatsWithCompletion:^(NSArray *array, NSError * error) {
+                if (error) {
+                    [self showAlertWithMessage:error.localizedDescription];
+                    return;
                 }
+                [self.collectionView reloadData];
             }];
         }
     }
@@ -171,7 +169,7 @@ static NSString * const reuseIdentifier = @"CellID";
 #pragma mark - CatsLoadingProtocol
 
 - (void)configureAppearance {
-    self.title = @"Cats loading";
+    self.title = @"My cats";
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor grayColor];
     
      UIBarButtonItem *plusItem = [[UIBarButtonItem alloc]
@@ -187,15 +185,15 @@ static NSString * const reuseIdentifier = @"CellID";
 }
 
 - (void)startLoading {
-    [self.presenter getUploadedCatsFromPage:page count:count completion:^(NSArray *array, NSError *error) {
-        if (error){
-            NSLog(@"Error");
-        } else {
-        self.catsArray = [array mutableCopy];
-        [self.collectionView reloadData];
+    [self.presenter getUploadedCatsWithCompletion:^(NSArray *array, NSError * error){
+        if (error) {
+            [self showAlertWithMessage:error.localizedDescription];
+            return;
         }
+        [self.collectionView reloadData];
     }];
 }
+
 
 #pragma mark - UICollectionViewDataSource
 
@@ -203,6 +201,22 @@ static NSString * const reuseIdentifier = @"CellID";
     CatCollectionViewCell *cell = [super collectionView:collectionView cellForItemAtIndexPath:indexPath];
     [cell.successLabel setHidden:NO];
     return cell;
+}
+
+#pragma mark - UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    if(self.presenter.count > 1) {
+        if(indexPath.row == self.presenter.count - 1) {
+            [self.presenter getUploadedCatsWithCompletion:^(NSArray *array, NSError * error){
+                if (error) {
+                    [self showAlertWithMessage:error.localizedDescription];
+                    return;
+                }
+                [self.collectionView reloadData];
+            }];
+        }
+    }
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -215,16 +229,14 @@ static NSString * const reuseIdentifier = @"CellID";
     [self.presenter uploadImage:image withName:fileName completion:^(NSArray * array, NSError * error) {
         if (error){
             [self showAlertWithMessage:error.localizedDescription];
-         }
-        if (self.catsArray){
-//        [self.catsArray addObjectsFromArray:array];
-        self.catsArray = [array mutableCopy];
-        } else {
-        self.catsArray = [NSMutableArray array];
-        [self.catsArray addObjectsFromArray:array];
+            return;
         }
-            [self.collectionView reloadData];
-        }];
+        if (!self.presenter.catsArray){
+            self.presenter.catsArray = [NSMutableArray new];
+        }
+        [self.presenter.catsArray insertObject:array[0] atIndex:0];
+        [self.collectionView reloadData];
+    }];
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -246,7 +258,7 @@ static NSString * const reuseIdentifier = @"CellID";
 
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Api-key editing" message:[NSString stringWithFormat:@"Current API key: %@", string] preferredStyle:UIAlertControllerStyleAlert];
     
-    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = @"Enter new Api-key";
     }];
     
@@ -254,8 +266,12 @@ static NSString * const reuseIdentifier = @"CellID";
 
     [alert addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSString *key = alert.textFields[0].text;
-        if (key.length != 0) {
+        NSString *oldKey = [[NSUserDefaults standardUserDefaults] objectForKey:@"API key"];
+        if (key.length != 0 && ![key isEqualToString:oldKey]) {
         [[NSUserDefaults standardUserDefaults] setObject:key forKey:@"API key"];
+            self.presenter = [CatsPresenter new];
+            [self startLoading];
+            [self.collectionView reloadData];
         }
     }]];
     

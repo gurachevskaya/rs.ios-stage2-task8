@@ -15,18 +15,21 @@
 
 @property (strong, nonatomic) ServerManager *serverManager;
 
+
 @end
 
 @implementation CatsPresenter
 
-- (instancetype)init
-{
+
+- (instancetype)init {
     self = [super init];
     if (self) {
         _serverManager = [ServerManager sharedManager];
+        _catsArray = [NSMutableArray array];
     }
     return self;
 }
+
 
 - (void)getCatsFromPage:(NSInteger)page count:(NSInteger)count completion:(void(^)(NSArray *, NSError *))completion {
     NSMutableArray *array = [NSMutableArray array];
@@ -35,8 +38,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if (error) {
                 completion(nil,error);
-//                NSLog(@"%@", [NSString stringWithFormat:@"Error: %@", error]);
-                
+                NSLog(@"%@", [NSString stringWithFormat:@"Error: %@", error]);
                 return;
             }
             for (NSDictionary* dict in dictionary) {
@@ -53,18 +55,11 @@
     NSString *pageForRequest = [NSString stringWithFormat:@"%ld", page];
     NSString *limitForRequest = [NSString stringWithFormat:@"%ld", count];
 
-    [self.serverManager performRequestWithMethod:@"GET" forUrl:@"https://api.thecatapi.com/v1/images/upload" arguments:@{@"page" : pageForRequest,@"limit" : limitForRequest, @"order" : @"ASC"} completion:^(NSDictionary *dictionary, NSError *error) {
+    [self.serverManager performRequestWithMethod:@"GET" forUrl:@"https://api.thecatapi.com/v1/images" arguments:@{@"page" : pageForRequest,@"limit" : limitForRequest, @"order" : @"DESC"} completion:^(NSDictionary *dictionary, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (error) {
-                completion(nil,error);
-                NSLog(@"%@", [NSString stringWithFormat:@"Error: %@", error]);
-                return;
-            }
-            
-            NSNumber *message = dictionary[@"message"];
-            if (message) {
-                NSLog(@"%@", message);
                 completion(nil, error);
+                return;
             } else {
             for (NSDictionary* dict in dictionary) {
                 Cat* cat = [[Cat alloc] initWithServerResponse:dict];
@@ -88,9 +83,7 @@
                 return;
             }
             NSNumber *message = dictionary[@"message"];
-            if (message) {
-                NSLog(@"%@", message);
-                
+            if (message) {                
                 NSMutableDictionary* details = [NSMutableDictionary dictionary];
                 [details setValue:message forKey:NSLocalizedDescriptionKey];
                 NSError *error = [NSError errorWithDomain:@"animal" code:200 userInfo:details];
@@ -99,10 +92,58 @@
             } else {
                 Cat* cat = [[Cat alloc] initWithServerResponse:dictionary];
                 [array addObject:cat];
+                completion(array, nil);
             }
-            completion(array, nil);
         });
     }];
 }
 
+- (NSInteger)count {
+    return self.catsArray.count;
+}
+
+- (void)getUploadedCatsWithCompletion:(void(^)(NSArray *, NSError *))completion {
+    [self updatePageAndCount];
+    [self getUploadedCatsFromPage:self.page count:self.countForLoad completion:^(NSArray *array, NSError *error) {
+        if (error) {
+            completion(nil, error);
+            return;
+        }
+        [self fillCatsArrayWithArray:array];
+        completion(array, nil);
+    }];
+}
+
+- (void)getRandomCatsWithCompletion:(void(^)(NSArray *, NSError *))completion {
+    [self updatePageAndCount];
+    [self getCatsFromPage:self.page count:self.countForLoad completion:^(NSArray *array, NSError *error) {
+        if (error) {
+            completion (nil, error);
+            return;
+        }
+        [self fillCatsArrayWithArray:array];
+        completion(array, nil);
+    }];
+}
+
+- (void)fillCatsArrayWithArray:(NSArray *)array {
+    if (array) {
+        if (array.count == 20) {
+            [self.catsArray addObjectsFromArray:array];
+        } else {
+            self.catsArray = [array mutableCopy];
+        }
+    }
+}
+
+- (void)updatePageAndCount {
+    if (self.countForLoad == 100) {
+        self.page = self.page + 1;
+        self.countForLoad = 0;
+    }
+    self.countForLoad = self.countForLoad + 20;
+}
+
 @end
+
+

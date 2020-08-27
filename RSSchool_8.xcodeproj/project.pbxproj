@@ -22,6 +22,7 @@
 		9A16465F24CF585D00E21B3C /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A16465E24CF585D00E21B3C /* PreviewViewController.m */; };
 		9A40EC6324D1DC3500F29922 /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A40EC6124D1DC3500F29922 /* OptionsViewController.m */; };
 		9A40EC6424D1DC3500F29922 /* OptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A40EC6224D1DC3500F29922 /* OptionsViewController.xib */; };
+		9A4F736324EC1939003E605D /* UploadedCatsPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4F736224EC1939003E605D /* UploadedCatsPresenter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,9 @@
 		9A40EC6024D1DC3500F29922 /* OptionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionsViewController.h; sourceTree = "<group>"; };
 		9A40EC6124D1DC3500F29922 /* OptionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OptionsViewController.m; sourceTree = "<group>"; };
 		9A40EC6224D1DC3500F29922 /* OptionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionsViewController.xib; sourceTree = "<group>"; };
+		9A4F736124EC1939003E605D /* UploadedCatsPresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UploadedCatsPresenter.h; sourceTree = "<group>"; };
+		9A4F736224EC1939003E605D /* UploadedCatsPresenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UploadedCatsPresenter.m; sourceTree = "<group>"; };
+		9A4F736424ED4796003E605D /* RSSchool_8-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RSSchool_8-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +136,8 @@
 			children = (
 				9A16462824CC878400E21B3C /* CatsPresenter.h */,
 				9A16462924CC878400E21B3C /* CatsPresenter.m */,
+				9A4F736124EC1939003E605D /* UploadedCatsPresenter.h */,
+				9A4F736224EC1939003E605D /* UploadedCatsPresenter.m */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -155,6 +161,7 @@
 				9A16463724CCB51700E21B3C /* CatsCollectionViewController.h */,
 				9A16463824CCB51700E21B3C /* CatsCollectionViewController.m */,
 				9A16463924CCB51700E21B3C /* CatsCollectionViewController.xib */,
+				9A4F736424ED4796003E605D /* RSSchool_8-Bridging-Header.h */,
 			);
 			path = CatsCollectionViewController;
 			sourceTree = "<group>";
@@ -209,6 +216,7 @@
 				TargetAttributes = {
 					9A16460524CC47E100E21B3C = {
 						CreatedOnToolsVersion = 11.5;
+						LastSwiftMigration = 1150;
 					};
 				};
 			};
@@ -252,6 +260,7 @@
 				9A16465C24CF4D4600E21B3C /* UIImageView+LoadWithURL.m in Sources */,
 				9A16463F24CCD41600E21B3C /* CatCollectionViewCell.m in Sources */,
 				9A16462724CC83D800E21B3C /* Cat.m in Sources */,
+				9A4F736324EC1939003E605D /* UploadedCatsPresenter.m in Sources */,
 				9A16460B24CC47E100E21B3C /* AppDelegate.m in Sources */,
 				9A16462D24CC89A300E21B3C /* ServerManager.m in Sources */,
 				9A16461C24CC47E300E21B3C /* main.m in Sources */,
@@ -380,6 +389,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 84DXJF9WZG;
 				INFOPLIST_FILE = RSSchool_8/Info.plist;
@@ -390,6 +400,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.demo.test.RSSchool-8";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "RSSchool_8/ViewControllers/CatsCollectionViewController/RSSchool_8-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -398,6 +411,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 84DXJF9WZG;
 				INFOPLIST_FILE = RSSchool_8/Info.plist;
@@ -408,6 +422,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.demo.test.RSSchool-8";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "RSSchool_8/ViewControllers/CatsCollectionViewController/RSSchool_8-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

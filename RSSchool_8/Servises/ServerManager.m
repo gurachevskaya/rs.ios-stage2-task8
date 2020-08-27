@@ -30,14 +30,25 @@
 }
 
 - (NSURLSession *)session {
-    if (!_session) {
+    
+    if (!_session ) {
         NSURLSessionConfiguration *configutation = [NSURLSessionConfiguration defaultSessionConfiguration];
-
-        configutation.HTTPAdditionalHeaders = @{
-            @"x-api-key": [[NSUserDefaults standardUserDefaults] objectForKey:@"API key"]
-        };
-
+        NSString *apiKey = [[NSUserDefaults standardUserDefaults] objectForKey:@"API key"];
+        if (apiKey != nil) {
+            configutation.HTTPAdditionalHeaders = @{
+                @"x-api-key": apiKey
+            };
+        }
         _session = [NSURLSession sessionWithConfiguration:configutation];
+    } else {
+        NSString *oldKey = [_session.configuration.HTTPAdditionalHeaders objectForKey:@"x-api-key"];
+        NSString *apiKey = [[NSUserDefaults standardUserDefaults] objectForKey:@"API key"];
+        if (![oldKey isEqualToString:apiKey]) {
+            NSURLSessionConfiguration *configutation = [NSURLSessionConfiguration defaultSessionConfiguration];
+            configutation.HTTPAdditionalHeaders = @{
+                @"x-api-key": apiKey};
+            _session = [NSURLSession sessionWithConfiguration:configutation];
+        }
     }
     return _session;
 }
@@ -57,6 +68,7 @@
     NSURL *url = urlComponents.URL;
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:method];
+//    [request setValue:@"4322d88c-f61c-431a-9880-2888a7f9d090" forHTTPHeaderField:@"x-api-key"];
 
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request
                                                  completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -72,6 +84,17 @@
             completion(nil, parsingError);
             return;
         }
+//        NSNumber *message = [dictionary objectForKey:@"message"];
+        if ([dictionary isKindOfClass:[NSDictionary class]]) {
+            
+            NSNumber *message = [dictionary objectForKey:@"message"];
+            NSMutableDictionary* details = [NSMutableDictionary dictionary];
+            [details setValue:message forKey:NSLocalizedDescriptionKey];
+            NSError *error = [NSError errorWithDomain:@"wrongApiKey" code:200 userInfo:details];
+            completion(nil, error);
+            return;
+        }
+             
         completion(dictionary, nil);
     }];
     [dataTask resume];
@@ -84,6 +107,7 @@
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:[NSURL URLWithString:stringUrl]];
     [request setHTTPMethod:@"POST"];
+//    [request setValue:@"4322d88c-f61c-431a-9880-2888a7f9d090" forHTTPHeaderField:@"x-api-key"];
     
     NSString *boundary = @"---------------------------14737809831466499882746641449";
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];

@@ -14,7 +14,7 @@
 - (void)loadImageWithUrl:(NSURL *)url andPlaceholder:(UIImage *)placeholder completion:(void(^)(UIImage*))completion {
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSURLCache* cache = [NSURLCache sharedURLCache];
+        NSURLCache *cache = [NSURLCache sharedURLCache];
         NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
         NSCachedURLResponse *cachedResponse = [cache cachedResponseForRequest:request];
         if (cachedResponse) {
