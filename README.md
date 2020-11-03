@@ -1,5 +1,7 @@
 # rs.ios-stage2-task8
+## App for downloading and saving cats
 
+### About:
 - API: https://docs.thecatapi.com/ 
 
 - Logic for passing Authentication (it should be possible to enter a API key "x-api-key")
