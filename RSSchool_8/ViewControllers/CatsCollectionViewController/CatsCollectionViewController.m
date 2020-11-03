@@ -12,6 +12,7 @@
 #import "UIImageView+LoadWithURL.h"
 #import <Photos/Photos.h>
 #import "PreviewViewController.h"
+#import "UIImageView+LoadWithURL.h"
 
 @interface CatsCollectionViewController () <UICollectionViewDelegateFlowLayout>
 
@@ -66,6 +67,7 @@ static NSString * const reuseIdentifier = @"CellID";
     [cell.activityIndicator startAnimating];
     
     [cell.imageView loadImageWithUrl:cat.imageURL andPlaceholder:[UIImage imageNamed:@"kitty"] completion:^(UIImage * image) {
+        [cell.imageView setImageInMain:[UIImage imageNamed:@"kitty"]];
         dispatch_async(dispatch_get_main_queue(), ^{
             [cell.imageView setImage:image];
             [cell.activityIndicator stopAnimating];

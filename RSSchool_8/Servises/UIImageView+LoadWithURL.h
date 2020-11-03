@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface UIImageView (LoadWithURL)
 
 - (void) loadImageWithUrl:(NSURL*)url andPlaceholder:(UIImage*)placeholder completion:(void(^)(UIImage *))completion;
+- (void) setImageInMain:(UIImage*)image;
 
 @end
 
