@@ -26,6 +26,7 @@
 		9A491C622551FBD300656667 /* Снимок экрана 2020-11-03 в 22.44.54.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A491C612551FBD300656667 /* Снимок экрана 2020-11-03 в 22.44.54.png */; };
 		9A491C652551FBDD00656667 /* Снимок экрана 2020-11-03 в 22.44.39.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A491C642551FBDD00656667 /* Снимок экрана 2020-11-03 в 22.44.39.png */; };
 		9A491C682551FBFE00656667 /* Снимок экрана 2020-11-03 в 23.58.28.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A491C672551FBFE00656667 /* Снимок экрана 2020-11-03 в 23.58.28.png */; };
+		9A491C6B2551FD5A00656667 /* Снимок экрана 2020-11-04 в 00.03.24.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A491C6A2551FD5A00656667 /* Снимок экрана 2020-11-04 в 00.03.24.png */; };
 		9AC51883250F9601006E45A9 /* ControllersFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC51882250F9601006E45A9 /* ControllersFactory.m */; };
 		9AC51886250F96F6006E45A9 /* MyCatsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC51885250F96F6006E45A9 /* MyCatsCollectionViewController.m */; };
 		9AC51889250F97F9006E45A9 /* RandomCatsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC51888250F97F9006E45A9 /* RandomCatsCollectionViewController.m */; };
@@ -63,6 +64,7 @@
 		9A491C612551FBD300656667 /* Снимок экрана 2020-11-03 в 22.44.54.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Снимок экрана 2020-11-03 в 22.44.54.png"; sourceTree = "<group>"; };
 		9A491C642551FBDD00656667 /* Снимок экрана 2020-11-03 в 22.44.39.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Снимок экрана 2020-11-03 в 22.44.39.png"; sourceTree = "<group>"; };
 		9A491C672551FBFE00656667 /* Снимок экрана 2020-11-03 в 23.58.28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Снимок экрана 2020-11-03 в 23.58.28.png"; sourceTree = "<group>"; };
+		9A491C6A2551FD5A00656667 /* Снимок экрана 2020-11-04 в 00.03.24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Снимок экрана 2020-11-04 в 00.03.24.png"; sourceTree = "<group>"; };
 		9AC51881250F9601006E45A9 /* ControllersFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ControllersFactory.h; sourceTree = "<group>"; };
 		9AC51882250F9601006E45A9 /* ControllersFactory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ControllersFactory.m; sourceTree = "<group>"; };
 		9AC51884250F96F6006E45A9 /* MyCatsCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyCatsCollectionViewController.h; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 		9A491C5D2551FB9600656667 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				9A491C6A2551FD5A00656667 /* Снимок экрана 2020-11-04 в 00.03.24.png */,
 				9A491C5E2551FBC700656667 /* Снимок экрана 2020-11-03 в 22.45.12.png */,
 				9A491C612551FBD300656667 /* Снимок экрана 2020-11-03 в 22.44.54.png */,
 				9A491C642551FBDD00656667 /* Снимок экрана 2020-11-03 в 22.44.39.png */,
@@ -287,6 +290,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A491C6B2551FD5A00656667 /* Снимок экрана 2020-11-04 в 00.03.24.png in Resources */,
 				9A16464024CCD41600E21B3C /* CatCollectionViewCell.xib in Resources */,
 				9A491C652551FBDD00656667 /* Снимок экрана 2020-11-03 в 22.44.39.png in Resources */,
 				9A40EC6424D1DC3500F29922 /* OptionsViewController.xib in Resources */,
