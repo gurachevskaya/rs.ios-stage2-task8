@@ -11,3 +11,7 @@
 - Detailed view. After clicking the cat in the UICollectionView, “full” image opens on a new screen with modal presentation.
 - User can save the image to the Galery.
 - MVP pattern instead MVC
+
+
+<img src="https://github.com/gurachevskaya/rs.ios-stage2-task8/blob/main/RSSchool_8/Images/Снимок%20экрана%202020-11-03%20в%2022.44.39.png?raw=true" width="200"><img src="https://github.com/gurachevskaya/rs.ios-stage2-task8/blob/main/RSSchool_8/Images/Снимок%20экрана%202020-11-03%20в%2022.44.54.png?raw=true" width="200"><img src="https://github.com/gurachevskaya/rs.ios-stage2-task8/blob/main/RSSchool_8/Images/Снимок%20экрана%202020-11-03%20в%2022.45.12.png?raw=true" width="200">
+<img src="https://github.com/gurachevskaya/rs.ios-stage2-task8/blob/main/RSSchool_8/Images/Снимок%20экрана%202020-11-03%20в%2023.58.28.png?raw=true" width="200">
