@@ -8,8 +8,11 @@
 
 #import "OptionsViewController.h"
 #import "CatsCollectionViewController.h"
+#import "ControllersFactory.h"
 
 @interface OptionsViewController ()
+
+@property (strong, nonatomic) ControllersFactory *factory;
 
 @end
 
@@ -17,11 +20,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.factory = [ControllersFactory new];
 }
 
 - (IBAction)randomCatsButtonTapped:(id)sender {
-    CatsCollectionViewController *catsVC = [[CatsCollectionViewController alloc] initWithType:RandomCats];
-    
+    CatsCollectionViewController *catsVC = [self.factory createControllerWithType: RandomCats];
     [self.navigationController pushViewController:catsVC animated:YES];
 }
 
@@ -53,8 +56,8 @@
         
         [self presentViewController:alertController animated:YES completion:nil];
     }
- 
-    CatsCollectionViewController *catsVC = [[CatsCollectionViewController alloc] initWithType:MyCats];
+    
+    CatsCollectionViewController *catsVC = [self.factory createControllerWithType:MyCats];
     [self.navigationController pushViewController:catsVC animated:YES];
 }
 @end

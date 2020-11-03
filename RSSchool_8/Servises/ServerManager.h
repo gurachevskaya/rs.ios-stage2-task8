@@ -17,7 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (ServerManager*) sharedManager;
 
-- (void)performRequestWithMethod:(NSString *)method forUrl:(NSString *)stringUrl arguments:(NSDictionary *)arguments completion:(void(^)(NSDictionary *, NSError *))completion;
+//- (void)performGetRequestForUrl:(NSString *)stringUrl arguments:(NSDictionary *)arguments completion:(void(^)(NSDictionary *, NSError *))completion;
+- (NSMutableURLRequest *)requestWithUrl:(NSString *)stringUrl arguments:(NSDictionary *)arguments;
+
+- (void)performGetDataTaskWithRequest:request completion:(void(^)(NSDictionary *, NSError *))completion;
+- (void)performHeadDataTaskWithRequest:request completion:(void(^)(NSInteger, NSError *))completion;
 
 - (void)performNetworkEventRequestCallWithFileUpload :(UIImage *)image name:(NSString *)name forUrl:(NSString *)stringUrl completion:(void (^)(NSDictionary*, NSError *))completion;
 

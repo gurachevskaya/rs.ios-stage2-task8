@@ -13,16 +13,15 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CatsPresenter : NSObject
-
 @property (strong, nonatomic) NSMutableArray<Cat *> *catsArray;
 @property (assign, nonatomic) NSInteger count;
 
 @property (assign, nonatomic) NSInteger page;
-@property (assign, nonatomic) NSInteger countForLoad;
 
-- (void)getCatsFromPage:(NSInteger)page count:(NSInteger)count completion:(void(^)(NSArray *, NSError *))completion;
 
-- (void)getUploadedCatsFromPage:(NSInteger)page count:(NSInteger)count completion:(void(^)(NSArray *, NSError *))completion;
+- (void)getCatsFromPage:(NSInteger)page completion:(void(^)(NSArray *, NSError *))completion;
+
+- (void)getUploadedCatsFromPage:(NSInteger)page completion:(void(^)(NSArray *, NSError *))completion;
 
 - (void)uploadImage:(UIImage *)image withName:(NSString *)name completion:(void(^)(NSArray *, NSError *))completion;
 

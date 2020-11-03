@@ -22,7 +22,9 @@
 		9A16465F24CF585D00E21B3C /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A16465E24CF585D00E21B3C /* PreviewViewController.m */; };
 		9A40EC6324D1DC3500F29922 /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A40EC6124D1DC3500F29922 /* OptionsViewController.m */; };
 		9A40EC6424D1DC3500F29922 /* OptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A40EC6224D1DC3500F29922 /* OptionsViewController.xib */; };
-		9A4F736324EC1939003E605D /* UploadedCatsPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4F736224EC1939003E605D /* UploadedCatsPresenter.m */; };
+		9AC51883250F9601006E45A9 /* ControllersFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC51882250F9601006E45A9 /* ControllersFactory.m */; };
+		9AC51886250F96F6006E45A9 /* MyCatsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC51885250F96F6006E45A9 /* MyCatsCollectionViewController.m */; };
+		9AC51889250F97F9006E45A9 /* RandomCatsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC51888250F97F9006E45A9 /* RandomCatsCollectionViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,9 +55,12 @@
 		9A40EC6024D1DC3500F29922 /* OptionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionsViewController.h; sourceTree = "<group>"; };
 		9A40EC6124D1DC3500F29922 /* OptionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OptionsViewController.m; sourceTree = "<group>"; };
 		9A40EC6224D1DC3500F29922 /* OptionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionsViewController.xib; sourceTree = "<group>"; };
-		9A4F736124EC1939003E605D /* UploadedCatsPresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UploadedCatsPresenter.h; sourceTree = "<group>"; };
-		9A4F736224EC1939003E605D /* UploadedCatsPresenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UploadedCatsPresenter.m; sourceTree = "<group>"; };
-		9A4F736424ED4796003E605D /* RSSchool_8-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RSSchool_8-Bridging-Header.h"; sourceTree = "<group>"; };
+		9AC51881250F9601006E45A9 /* ControllersFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ControllersFactory.h; sourceTree = "<group>"; };
+		9AC51882250F9601006E45A9 /* ControllersFactory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ControllersFactory.m; sourceTree = "<group>"; };
+		9AC51884250F96F6006E45A9 /* MyCatsCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyCatsCollectionViewController.h; sourceTree = "<group>"; };
+		9AC51885250F96F6006E45A9 /* MyCatsCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyCatsCollectionViewController.m; sourceTree = "<group>"; };
+		9AC51887250F97F9006E45A9 /* RandomCatsCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RandomCatsCollectionViewController.h; sourceTree = "<group>"; };
+		9AC51888250F97F9006E45A9 /* RandomCatsCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RandomCatsCollectionViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,8 +141,6 @@
 			children = (
 				9A16462824CC878400E21B3C /* CatsPresenter.h */,
 				9A16462924CC878400E21B3C /* CatsPresenter.m */,
-				9A4F736124EC1939003E605D /* UploadedCatsPresenter.h */,
-				9A4F736224EC1939003E605D /* UploadedCatsPresenter.m */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -158,10 +161,13 @@
 		9A16466024CF586800E21B3C /* CatsCollectionViewController */ = {
 			isa = PBXGroup;
 			children = (
+				9AC51881250F9601006E45A9 /* ControllersFactory.h */,
+				9AC51882250F9601006E45A9 /* ControllersFactory.m */,
 				9A16463724CCB51700E21B3C /* CatsCollectionViewController.h */,
 				9A16463824CCB51700E21B3C /* CatsCollectionViewController.m */,
 				9A16463924CCB51700E21B3C /* CatsCollectionViewController.xib */,
-				9A4F736424ED4796003E605D /* RSSchool_8-Bridging-Header.h */,
+				9AC5188A250F98B4006E45A9 /* RandomCats */,
+				9AC5188B250F98C1006E45A9 /* MyCats */,
 			);
 			path = CatsCollectionViewController;
 			sourceTree = "<group>";
@@ -183,6 +189,24 @@
 				9A40EC6224D1DC3500F29922 /* OptionsViewController.xib */,
 			);
 			path = OptionsViewController;
+			sourceTree = "<group>";
+		};
+		9AC5188A250F98B4006E45A9 /* RandomCats */ = {
+			isa = PBXGroup;
+			children = (
+				9AC51887250F97F9006E45A9 /* RandomCatsCollectionViewController.h */,
+				9AC51888250F97F9006E45A9 /* RandomCatsCollectionViewController.m */,
+			);
+			path = RandomCats;
+			sourceTree = "<group>";
+		};
+		9AC5188B250F98C1006E45A9 /* MyCats */ = {
+			isa = PBXGroup;
+			children = (
+				9AC51884250F96F6006E45A9 /* MyCatsCollectionViewController.h */,
+				9AC51885250F96F6006E45A9 /* MyCatsCollectionViewController.m */,
+			);
+			path = MyCats;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,15 +283,17 @@
 			files = (
 				9A16465C24CF4D4600E21B3C /* UIImageView+LoadWithURL.m in Sources */,
 				9A16463F24CCD41600E21B3C /* CatCollectionViewCell.m in Sources */,
+				9AC51886250F96F6006E45A9 /* MyCatsCollectionViewController.m in Sources */,
 				9A16462724CC83D800E21B3C /* Cat.m in Sources */,
-				9A4F736324EC1939003E605D /* UploadedCatsPresenter.m in Sources */,
 				9A16460B24CC47E100E21B3C /* AppDelegate.m in Sources */,
 				9A16462D24CC89A300E21B3C /* ServerManager.m in Sources */,
+				9AC51889250F97F9006E45A9 /* RandomCatsCollectionViewController.m in Sources */,
 				9A16461C24CC47E300E21B3C /* main.m in Sources */,
 				9A16462A24CC878400E21B3C /* CatsPresenter.m in Sources */,
 				9A16465F24CF585D00E21B3C /* PreviewViewController.m in Sources */,
 				9A16463A24CCB51700E21B3C /* CatsCollectionViewController.m in Sources */,
 				9A16464324CD7BF200E21B3C /* ImageDownloadOperation.m in Sources */,
+				9AC51883250F9601006E45A9 /* ControllersFactory.m in Sources */,
 				9A40EC6324D1DC3500F29922 /* OptionsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -54,7 +54,7 @@
 }
 
 
-- (void)performRequestWithMethod:(NSString *)method forUrl:(NSString *)stringUrl arguments:(NSDictionary *)arguments completion:(void(^)(NSDictionary *, NSError *))completion {
+- (NSMutableURLRequest *)requestWithUrl:(NSString *)stringUrl arguments:(NSDictionary *)arguments {
     NSURLComponents *urlComponents = [NSURLComponents componentsWithString:stringUrl];
     
     if (arguments) {
@@ -67,9 +67,15 @@
     
     NSURL *url = urlComponents.URL;
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-    [request setHTTPMethod:method];
+//    [request setHTTPMethod:@"GET"];
+    return request;
 //    [request setValue:@"4322d88c-f61c-431a-9880-2888a7f9d090" forHTTPHeaderField:@"x-api-key"];
+}
 
+- (void)performGetDataTaskWithRequest:request completion:(void(^)(NSDictionary *, NSError *))completion {
+    
+    [request setHTTPMethod:@"GET"];
+    
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request
                                                  completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error) {
@@ -84,7 +90,7 @@
             completion(nil, parsingError);
             return;
         }
-//        NSNumber *message = [dictionary objectForKey:@"message"];
+        
         if ([dictionary isKindOfClass:[NSDictionary class]]) {
             
             NSNumber *message = [dictionary objectForKey:@"message"];
@@ -96,6 +102,28 @@
         }
              
         completion(dictionary, nil);
+    }];
+    [dataTask resume];
+}
+
+- (void)performHeadDataTaskWithRequest:request completion:(void(^)(NSInteger, NSError *))completion {
+    
+    [request setHTTPMethod:@"HEAD"];
+    
+    NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request
+                                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (error) {
+            completion(0, error);
+            return;
+        }
+        
+        NSHTTPURLResponse *reponse2 = (NSHTTPURLResponse *)response;
+        NSDictionary *headers = [reponse2 allHeaderFields];
+        NSLog(@"%@", headers);
+        NSInteger limit = [headers[@"pagination-count"] integerValue];
+//        NSString *limit = (NSString *)headers[@"pagination-count"];
+             
+        completion(limit, nil);
     }];
     [dataTask resume];
 }

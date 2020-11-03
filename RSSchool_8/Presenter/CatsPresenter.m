@@ -10,11 +10,11 @@
 #import "ServerManager.h"
 #import "ImageDownloadOperation.h"
 
+NSInteger limit = 100;
 
 @interface CatsPresenter ()
 
 @property (strong, nonatomic) ServerManager *serverManager;
-
 
 @end
 
@@ -31,10 +31,13 @@
 }
 
 
-- (void)getCatsFromPage:(NSInteger)page count:(NSInteger)count completion:(void(^)(NSArray *, NSError *))completion {
+- (void)getCatsFromPage:(NSInteger)page completion:(void(^)(NSArray *, NSError *))completion {
     NSMutableArray *array = [NSMutableArray array];
-        
-    [self.serverManager performRequestWithMethod:@"GET" forUrl:@"https://api.thecatapi.com/v1/images/search" arguments:@{@"page" : [NSString stringWithFormat:@"%ld", page] ,@"limit" : [NSString stringWithFormat:@"%ld", count], @"order" : @"ASC"} completion:^(NSDictionary *dictionary, NSError *error) {
+    
+    
+    NSURLRequest *request = [self.serverManager requestWithUrl:@"https://api.thecatapi.com/v1/images/search" arguments:@{@"page" : [NSString stringWithFormat:@"%ld", page] ,@"limit" : [NSString stringWithFormat:@"%ld", limit], @"order" : @"ASC"}];
+    
+    [self.serverManager performGetDataTaskWithRequest:request completion:^(NSDictionary * dictionary, NSError * error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (error) {
                 completion(nil,error);
@@ -48,24 +51,40 @@
             completion(array, nil);
         });
     }];
-}
+};
 
-- (void)getUploadedCatsFromPage:(NSInteger)page count:(NSInteger)count completion:(void(^)(NSArray *, NSError *))completion {
-      NSMutableArray *array = [NSMutableArray array];
+
+//- (void)getLimitWithPage:(NSInteger)page completion:(void(^)(NSInteger))completion {
+//    NSURLRequest *request = [self.serverManager requestWithUrl:@"https://api.thecatapi.com/v1/images/search" arguments:@{@"page" : [NSString stringWithFormat:@"%ld", page] ,@"limit" : [NSString stringWithFormat:@"%ld", limit], @"order" : @"ASC"}];
+//    
+//    [self.serverManager performHeadDataTaskWithRequest:request completion:^(NSInteger responseLimit, NSError * error) {
+//                
+//        if (responseLimit < limit) {
+//            completion(responseLimit);
+//        } else {
+//            completion(limit);
+//        }
+//    }];
+//}
+
+
+- (void)getUploadedCatsFromPage:(NSInteger)page completion:(void(^)(NSArray *, NSError *))completion {
+    NSMutableArray *array = [NSMutableArray array];
     NSString *pageForRequest = [NSString stringWithFormat:@"%ld", page];
-    NSString *limitForRequest = [NSString stringWithFormat:@"%ld", count];
-
-    [self.serverManager performRequestWithMethod:@"GET" forUrl:@"https://api.thecatapi.com/v1/images" arguments:@{@"page" : pageForRequest,@"limit" : limitForRequest, @"order" : @"DESC"} completion:^(NSDictionary *dictionary, NSError *error) {
+    
+    NSURLRequest *request = [self.serverManager requestWithUrl:@"https://api.thecatapi.com/v1/images" arguments:@{@"page" : pageForRequest,@"limit" : [@(limit) stringValue], @"order" : @"DESC"}];
+    
+    [self.serverManager performGetDataTaskWithRequest:request completion:^(NSDictionary * dictionary, NSError * error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (error) {
                 completion(nil, error);
                 return;
             } else {
-            for (NSDictionary* dict in dictionary) {
-                Cat* cat = [[Cat alloc] initWithServerResponse:dict];
-                [array addObject:cat];
-            }
-            completion(array, nil);
+                for (NSDictionary* dict in dictionary) {
+                    Cat* cat = [[Cat alloc] initWithServerResponse:dict];
+                    [array addObject:cat];
+                }
+                completion(array, nil);
             }
         });
     }];
@@ -103,20 +122,19 @@
 }
 
 - (void)getUploadedCatsWithCompletion:(void(^)(NSArray *, NSError *))completion {
-    [self updatePageAndCount];
-    [self getUploadedCatsFromPage:self.page count:self.countForLoad completion:^(NSArray *array, NSError *error) {
+    [self updatePage];
+    [self getUploadedCatsFromPage:self.page completion:^(NSArray *array, NSError *error) {
         if (error) {
             completion(nil, error);
             return;
         }
-        [self fillCatsArrayWithArray:array];
         completion(array, nil);
     }];
 }
 
 - (void)getRandomCatsWithCompletion:(void(^)(NSArray *, NSError *))completion {
-    [self updatePageAndCount];
-    [self getCatsFromPage:self.page count:self.countForLoad completion:^(NSArray *array, NSError *error) {
+    [self updatePage];
+    [self getCatsFromPage:self.page completion:^(NSArray *array, NSError *error) {
         if (error) {
             completion (nil, error);
             return;
@@ -128,7 +146,7 @@
 
 - (void)fillCatsArrayWithArray:(NSArray *)array {
     if (array) {
-        if (array.count == 20) {
+        if (array.count == limit) {
             [self.catsArray addObjectsFromArray:array];
         } else {
             self.catsArray = [array mutableCopy];
@@ -136,12 +154,8 @@
     }
 }
 
-- (void)updatePageAndCount {
-    if (self.countForLoad == 100) {
+- (void)updatePage {
         self.page = self.page + 1;
-        self.countForLoad = 0;
-    }
-    self.countForLoad = self.countForLoad + 20;
 }
 
 @end

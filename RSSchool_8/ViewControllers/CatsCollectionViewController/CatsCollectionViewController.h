@@ -7,26 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CatsPresenter.h"
+#import "CatCollectionViewCell.h"
+
 
 NS_ASSUME_NONNULL_BEGIN
 
-
-typedef NS_ENUM(NSInteger, ViewControllerType) {
-  RandomCats,
-  MyCats
-};
-
-
 @protocol CatsLoadingProtocol
-
 - (void)startLoading;
 - (void)configureAppearance;
-
 @end
 
-@interface CatsCollectionViewController : UICollectionViewController <CatsLoadingProtocol>
+@interface CatsCollectionViewController : UICollectionViewController
 
-- (instancetype)initWithType:(ViewControllerType)type;
+@property (strong, nonatomic) CatsPresenter *presenter;
+- (void)showAlertWithMessage:(NSString *)message;
 
 @end
 
